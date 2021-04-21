@@ -4,14 +4,15 @@ function getCalculatorValues() {
     const calcDisplay = document.getElementById('display');
     const numbers = document.querySelectorAll('.number');
 
-    let currentValue = [];
+    let valuesArray = [];
+    let currentValue = 0;
         
     for (number of numbers) {
         number.addEventListener('click', (e) => {
         const getNumbers = e.target.id;
-        currentValue.push(getNumbers);
-        calcDisplay.textContent = currentValue.join('');
-        
+        valuesArray.push(getNumbers);
+        calcDisplay.textContent = valuesArray.join('');
+        currentValue = calcDisplay.textContent;
         console.log(currentValue);
         })
        
