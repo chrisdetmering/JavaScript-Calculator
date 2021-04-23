@@ -38,7 +38,12 @@ operatorButton.addEventListener('click', (e) => {
 
 document.querySelector('.equals') 
 .addEventListener('click', (e) => {
-    console.log('equals')
+    const equals = e.target.id;
+    if (equals) {
+        answer = calculate()
+        calcDisplay.textContent = eval(answer)
+    }
+    console.log(answer);
 })
 
 function calculate() {
