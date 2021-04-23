@@ -34,7 +34,8 @@ html, body {
     border-radius: 5px;
 }
  .numbers, .operator, 
- .memory-operator, .decimal, .equals{
+ .memory-operator, .decimal, 
+ .equals, .clear{
     border-radius: 50%;
     background-color: black;
     border: 1px solid lightgrey;
@@ -53,7 +54,7 @@ html, body {
 
 .numbers:hover, .operator:hover, 
 .memory-operator:hover,.decimal:hover, 
-.equals:hover {
+.equals:hover, .clear:hover {
     background-color: #666666;
     border: 1px solid black;
     transition: .5s; 

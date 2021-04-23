@@ -38,13 +38,22 @@ operatorButton.addEventListener('click', (e) => {
 
 document.querySelector('.equals') 
 .addEventListener('click', (e) => {
-    const equals = e.target.id;
-    if (equals) {
+    const equalsButton = e.target.id;
+    if (equalsButton) {
         answer = calculate()
         calcDisplay.textContent = eval(answer)
     }
     console.log(answer);
 })
+
+document.querySelector('.clear')
+.addEventListener('click', (e) => {
+    const clearButton = e.target.id;
+    if (clearButton) {
+        calcDisplay.textContent = '0';
+    }
+
+}) 
 
 function calculate() {
     switch (operator) {
