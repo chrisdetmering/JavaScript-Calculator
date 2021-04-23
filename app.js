@@ -4,56 +4,77 @@ let firstOperand = '';
 let secondOperand ='';
 let operator = '';
 
-document.querySelectorAll('.numbers')
-.forEach(numberButton =>  {
-    numberButton.addEventListener('click', () => {
-        const number = numberButton.id
-        if(!operator) {
-            firstOperand += number;
-            calcDisplay.textContent = firstOperand;
-        }
 
-        if(firstOperand && operator) {
-            secondOperand += number;
-            calcDisplay.textContent = secondOperand;
-        }
+function setOperands (){
+    document.querySelectorAll('.numbers')
+    .forEach(numberButton =>  {
+        numberButton.addEventListener('click', () => {
+            const number = numberButton.id
+            if(!operator) {
+                firstOperand += number;
+                calcDisplay.textContent = firstOperand;
+            }
 
-        console.log("firstOperand: ", firstOperand)
-        console.log("secondOperand: ", secondOperand)
+            if(firstOperand && operator) {
+                secondOperand += number;
+                calcDisplay.textContent = secondOperand;
+            }
+
+            console.log("firstOperand: ", firstOperand)
+            console.log("secondOperand: ", secondOperand)
+        })
+
     })
+}
+setOperands()
 
-})
 
-document.querySelectorAll('.operator')
-.forEach(operatorButton =>{
-operatorButton.addEventListener('click', (e) => {
-    const selectedOperator = e.target.id;
+function setOperators(){
+    document.querySelectorAll('.operator')
+    .forEach(operatorButton => {
+    operatorButton.addEventListener('click', (e) => {
+        const selectedOperator = e.target.id;
      
-    if (firstOperand) {
+        if (firstOperand) {
         operator = selectedOperator;
-    }
-    console.log(operator)
+        }
+        console.log(operator)
+        })
     })
-})
+}
+setOperators()
 
-document.querySelector('.equals') 
-.addEventListener('click', (e) => {
-    const equalsButton = e.target.id;
-    if (equalsButton) {
-        answer = calculate()
-        calcDisplay.textContent = eval(answer)
-    }
+function setEqualsButton(){
+    document.querySelector('.equals') 
+    .addEventListener('click', (e) => {
+        const equalsButton = e.target.id;
+
+        if (equalsButton) {
+            answer = calculate()
+            calcDisplay.textContent = eval(answer)
+            firstOperand = calcDisplay.textContent;
+            secondOperand = '';
+            operator = '';
+        }
     console.log(answer);
-})
+    })
+}
 
-document.querySelector('.clear')
-.addEventListener('click', (e) => {
-    const clearButton = e.target.id;
-    if (clearButton) {
-        calcDisplay.textContent = '0';
-    }
+setEqualsButton()
 
-}) 
+function setClearButton() {
+    document.querySelector('.clear')
+    .addEventListener('click', (e) => {
+        const clearButton = e.target.id;
+        if (clearButton) {
+            calcDisplay.textContent = '0';
+            firstOperand = '';
+            secondOperand = '';
+            operator = '';
+        }
+    }) 
+}
+setClearButton()
 
 function calculate() {
     switch (operator) {
