@@ -1,72 +1,68 @@
 
-function getCalculatorValues() {
-    
-    const calcDisplay = document.getElementById('display');
-    const numbers = document.querySelectorAll('.number');
+const calcDisplay = document.getElementById('display');
+let firstOperand = '';
+let secondOperand ='';
+let operator = '';
 
-    let valuesArray = [];
-    let currentValue = 0;
-        
-    for (number of numbers) {
-        number.addEventListener('click', (e) => {
-        const getNumbers = e.target.id;
-        valuesArray.push(getNumbers);
-        calcDisplay.textContent = valuesArray.join('');
-        currentValue = calcDisplay.textContent;
-        console.log(currentValue);
-        })
-       
-    } 
-}
-getCalculatorValues()
+document.querySelectorAll('.numbers')
+.forEach(numberButton =>  {
+    numberButton.addEventListener('click', () => {
+        const number = numberButton.id
+        if(!operator) {
+            firstOperand += number;
+            calcDisplay.textContent = firstOperand;
+        }
 
-function getMemoryOperators () {
-    const operators = document.querySelectorAll('.memory-operator');
-    for (operator of operators) {
-        operator.addEventListener('click', (e) => {
-           const getOperators = e.target.id;
-           switch (getOperators) {
-               case 'clear':
-                   alert('clear')
-                   break;
-               case 'memory-recall':
-                   alert('memory-recall')
-                   break;    
-                case 'add-memory':
-                    alert('add-memory ')
-                    break;
-                case 'remove-memory':
-                    alert('remove-memory')
-                    break;    
-           }
-        })
-    } 
-}
-getMemoryOperators()
+        if(firstOperand && operator) {
+            secondOperand += number;
+            calcDisplay.textContent = secondOperand;
+        }
 
-function getMathOperators () {
-    const operators = document.querySelectorAll('.math-operator');
-    for (operator of operators) {
-        operator.addEventListener('click', (e) => {
-           const getOperators = e.target.id;
-           switch (getOperators) {
-               case 'add':
-                   alert('add')
-                   break;
-               case 'subtract':
-                   alert('subtract')
-                   break;    
-                case 'multiply':
-                    alert('multiply')
-                    break;
-                case 'divide':
-                    alert('divide')
-                    break;    
-                case 'equals':
-                    alert('equals')
-                    break;        
-           }
-        })
-    } 
+        console.log("firstOperand: ", firstOperand)
+        console.log("secondOperand: ", secondOperand)
+    })
+
+})
+
+document.querySelectorAll('.operator')
+.forEach(operatorButton =>{
+operatorButton.addEventListener('click', (e) => {
+    const selectedOperator = e.target.id;
+     
+    if (firstOperand) {
+        operator = selectedOperator;
+    }
+    console.log(operator)
+    })
+})
+
+document.querySelector('.equals') 
+.addEventListener('click', (e) => {
+    console.log('equals')
+})
+
+function calculate() {
+    switch (operator) {
+        case 'add':
+            return add();
+        case 'subtract':
+            return subtract();       
+        case 'multiply':
+            return multiply();
+        case 'divide':
+            return divide();                    
+    }
 }
-getMathOperators()
+
+function add() {
+    return `${Number(firstOperand)} + ${Number(secondOperand)}`;
+}
+function subtract() {
+    return `${Number(firstOperand)} - ${Number(secondOperand)}`;
+}
+function multiply() {
+    return `${Number(firstOperand)} * ${Number(secondOperand)}`;
+}
+function divide() {
+    return `${Number(firstOperand)} / ${Number(secondOperand)}`;
+}
