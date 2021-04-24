@@ -22,7 +22,13 @@ function setOperands (){
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
-            
+            if (secondOperand && operator) {
+                answer = eval(calculate())
+                calcDisplay.textContent = answer;
+                firstOperand = calcDisplay.textContent;
+                secondOperand = '';
+                operator = '';
+            }
             console.log("firstOperand: ", firstOperand)
             console.log("secondOperand: ", secondOperand)
         })
