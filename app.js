@@ -1,25 +1,28 @@
 
 const calcDisplay = document.getElementById('display');
+
 let firstOperand = '';
 let secondOperand ='';
 let operator = '';
+
+let memory = '';
 
 
 function setOperands (){
     document.querySelectorAll('.numbers')
     .forEach(numberButton =>  {
-        numberButton.addEventListener('click', () => {
+        numberButton.addEventListener('click', (e) => {
             const number = numberButton.id
             if(!operator) {
                 firstOperand += number;
                 calcDisplay.textContent = firstOperand;
             }
-
+            
             if(firstOperand && operator) {
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
-
+            
             console.log("firstOperand: ", firstOperand)
             console.log("secondOperand: ", secondOperand)
         })
@@ -29,7 +32,7 @@ function setOperands (){
 setOperands()
 
 
-function setOperators(){
+function setMathOperators(){
     document.querySelectorAll('.operator')
     .forEach(operatorButton => {
     operatorButton.addEventListener('click', (e) => {
@@ -38,20 +41,19 @@ function setOperators(){
         if (firstOperand) {
         operator = selectedOperator;
         }
-        console.log(operator)
+       
         })
     })
 }
-setOperators()
+setMathOperators()
 
 function setEqualsButton(){
     document.querySelector('.equals') 
     .addEventListener('click', (e) => {
         const equalsButton = e.target.id;
-
         if (equalsButton) {
-            answer = calculate()
-            calcDisplay.textContent = eval(answer)
+            answer = eval(calculate())
+            calcDisplay.textContent = answer;
             firstOperand = calcDisplay.textContent;
             secondOperand = '';
             operator = '';
