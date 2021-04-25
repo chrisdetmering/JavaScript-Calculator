@@ -18,20 +18,22 @@ function setOperands() {
             if(!operator) {
                if (decimalButton){
                     if (firstOperand.includes(decimalButton.id)) {
-                         return decimalButton.disabled;
-                    }else {
+                        return decimalButton.disabled;
+                    } else {
                         firstOperand += number;
                         calcDisplay.textContent = firstOperand;
                     }
+                    
                 } else {
-                    firstOperand += number;
-                    calcDisplay.textContent = firstOperand;
-                }
+                        firstOperand += number;
+                        calcDisplay.textContent = firstOperand
+               }
             }
             if (firstOperand && operator) {
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
+            
            
             console.log("firstOperand: ", firstOperand)
             console.log("secondOperand: ", secondOperand)
@@ -57,28 +59,30 @@ function setMathOperators() {
 }
 setMathOperators()
 
-// function setMemoryOperators() {
-//     document.querySelectorAll('.memory-operator')
-//     .forEach(memoryButton => {
-//     memoryButton.addEventListener('click', (e) => {
-//         const memoryOperator = e.target.id;
-//         operator = memoryOperator;
+function setMemoryOperators() {
+    document.querySelectorAll('.memory-operator')
+    .forEach(memoryButton => {
+    memoryButton.addEventListener('click', (e) => {
+        const memoryOperator = e.target.id;
+        operator = memoryOperator;
         
-//         switch(operator) { 
-//             case 'add-memory':
-//                 memory += calcDisplay.textContent;
-//             case 'subtract-memory':
-//                 memory -= calcDisplay.textContent;
-//             case 'memory-recall':
-//                 calcDisplay.textContent = memory;
+        switch(operator) { 
+            case 'add-memory':
+               return memory += calcDisplay.textContent;
+            case 'subtract-memory':
+               return  memory -= calcDisplay.textContent;
+            case 'memory-recall':
+               calcDisplay.textContent = memory;
+               firstOperand = memory;
+               
 
-//         }
-//        console.log(memoryOperator)
-//        console.log(memory)
-//         })
-//     })
-// }
-// setMemoryOperators()
+        }
+       console.log(memoryOperator)
+       console.log(memory)
+        })
+    })
+}
+setMemoryOperators()
 
 
 function setEqualsButton(){
@@ -86,12 +90,17 @@ function setEqualsButton(){
     .addEventListener('click', (e) => {
         const equalsButton = e.target.id;
         if (equalsButton) {
+            if (!operator) {
+            equalsButton.disabled = true;
+            }else { 
             answer = eval(calculate())
             calcDisplay.textContent = answer;
             firstOperand = calcDisplay.textContent;
             secondOperand = '';
             operator = '';
+            }
         }
+       
         
     console.log(answer);
     })
