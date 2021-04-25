@@ -8,17 +8,27 @@ let operator = '';
 let memory = '';
 
 
-function setOperands (){
+function setOperands() {
+    
     document.querySelectorAll('.numbers')
     .forEach(numberButton =>  {
         numberButton.addEventListener('click', (e) => {
+            const decimalButton = document.getElementById('.');
             const number = numberButton.id
             if(!operator) {
-                firstOperand += number;
-                calcDisplay.textContent = firstOperand;
+               if (decimalButton){
+                    if (firstOperand.includes(decimalButton.id)) {
+                         return decimalButton.disabled;
+                    }else {
+                        firstOperand += number;
+                        calcDisplay.textContent = firstOperand;
+                    }
+                } else {
+                    firstOperand += number;
+                    calcDisplay.textContent = firstOperand;
+                }
             }
-            
-            if(firstOperand && operator) {
+            if (firstOperand && operator) {
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
@@ -32,7 +42,7 @@ function setOperands (){
 setOperands()
 
 
-function setMathOperators(){
+function setMathOperators() {
     document.querySelectorAll('.operator')
     .forEach(operatorButton => {
     operatorButton.addEventListener('click', (e) => {
@@ -47,6 +57,30 @@ function setMathOperators(){
 }
 setMathOperators()
 
+// function setMemoryOperators() {
+//     document.querySelectorAll('.memory-operator')
+//     .forEach(memoryButton => {
+//     memoryButton.addEventListener('click', (e) => {
+//         const memoryOperator = e.target.id;
+//         operator = memoryOperator;
+        
+//         switch(operator) { 
+//             case 'add-memory':
+//                 memory += calcDisplay.textContent;
+//             case 'subtract-memory':
+//                 memory -= calcDisplay.textContent;
+//             case 'memory-recall':
+//                 calcDisplay.textContent = memory;
+
+//         }
+//        console.log(memoryOperator)
+//        console.log(memory)
+//         })
+//     })
+// }
+// setMemoryOperators()
+
+
 function setEqualsButton(){
     document.querySelector('.equals') 
     .addEventListener('click', (e) => {
@@ -58,6 +92,7 @@ function setEqualsButton(){
             secondOperand = '';
             operator = '';
         }
+        
     console.log(answer);
     })
 }
