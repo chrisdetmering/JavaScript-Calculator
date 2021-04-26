@@ -77,7 +77,7 @@ function setMemoryOperators() {
         
         switch(operator) { 
             case 'add-memory':
-                memory += calcDisplay.textContent;
+                memory = Number(memory) + Number(calcDisplay.textContent);
                 calcDisplay.textContent = '0';
                 operator = '';
                 firstOperand = '';
