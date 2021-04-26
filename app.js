@@ -11,7 +11,7 @@ function handleDecimal () {
     if (!operator && firstOperand.indexOf('.') === -1) {
         firstOperand += '.';
         calcDisplay.textContent = firstOperand;
-    } else if (secondOperand.indexOf('.') == -1 && operator){
+    } else if (secondOperand.indexOf('.') === -1 && operator){
         secondOperand += '.';
         calcDisplay.textContent = secondOperand;
     }
@@ -51,18 +51,16 @@ function setMathOperators() {
      
         if (firstOperand) {
         operator = selectedOperator;
-        } 
-        if(secondOperand){
-            if (operator) {
+        }
+        if (operator){
+            if (firstOperand && secondOperand){
             answer = eval(calculate())
             calcDisplay.textContent = answer;
-            firstOperand = calcDisplay.textContent;
-            secondOperand = '';
-            operator = selectedOperator;
-            }
+            }     
+        firstOperand = calcDisplay.textContent;
+        secondOperand = '';
         }
-       
-       
+    
         })
     })
 }
@@ -92,10 +90,10 @@ function setMemoryOperators() {
                 if (!memory) {
                     calcDisplay.textContent = '0'
                 } else {
-               calcDisplay.textContent = memory;
-               firstOperand = memory;
-               break;
-                }
+                    calcDisplay.textContent = memory;
+                    firstOperand = memory;
+                    break;
+                }      
         }
        console.log(memoryOperator)
        console.log(memory)
