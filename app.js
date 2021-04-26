@@ -51,7 +51,17 @@ function setMathOperators() {
      
         if (firstOperand) {
         operator = selectedOperator;
+        } 
+        if(secondOperand){
+            if (operator) {
+            answer = eval(calculate())
+            calcDisplay.textContent = answer;
+            firstOperand = calcDisplay.textContent;
+            secondOperand = '';
+            operator = selectedOperator;
+            }
         }
+       
        
         })
     })
@@ -93,7 +103,6 @@ function setMemoryOperators() {
     })
 }
 setMemoryOperators()
-
 
 function setEqualsButton(){
     document.querySelector('.equals') 
