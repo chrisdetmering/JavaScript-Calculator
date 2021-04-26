@@ -7,34 +7,33 @@ let operator = '';
 
 let memory = '';
 
+function handleDecimal () {
+    if (!operator && firstOperand.indexOf('.') === -1) {
+        firstOperand += '.';
+        calcDisplay.textContent = firstOperand;
+    } else if (secondOperand.indexOf('.') == -1 && operator){
+        secondOperand += '.';
+        calcDisplay.textContent = secondOperand;
+    }
+}
+
+document.getElementById('.').addEventListener('click', handleDecimal);
 
 function setOperands() {
     
     document.querySelectorAll('.numbers')
     .forEach(numberButton =>  {
         numberButton.addEventListener('click', (e) => {
-            const decimalButton = document.getElementById('.');
             const number = numberButton.id
             if(!operator) {
-               if (decimalButton){
-                    if (firstOperand.includes(decimalButton.id)) {
-                        return decimalButton.disabled;
-                    } else {
-                        firstOperand += number;
-                        calcDisplay.textContent = firstOperand;
-                    }
-                    
-                } else {
-                        firstOperand += number;
-                        calcDisplay.textContent = firstOperand
-               }
+                firstOperand += number;
+                calcDisplay.textContent = firstOperand
             }
             if (firstOperand && operator) {
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
             
-           
             console.log("firstOperand: ", firstOperand)
             console.log("secondOperand: ", secondOperand)
         })
@@ -68,14 +67,25 @@ function setMemoryOperators() {
         
         switch(operator) { 
             case 'add-memory':
-               return memory += calcDisplay.textContent;
+                memory += calcDisplay.textContent;
+                calcDisplay.textContent = '0';
+                operator = '';
+                firstOperand = '';
+                break;
             case 'subtract-memory':
-               return  memory -= calcDisplay.textContent;
+                memory -= calcDisplay.textContent;
+                calcDisplay.textContent = '0';
+                operator = '';
+                firstOperand = '';
+                break;
             case 'memory-recall':
+                if (!memory) {
+                    calcDisplay.textContent = '0'
+                } else {
                calcDisplay.textContent = memory;
                firstOperand = memory;
-               
-
+               break;
+                }
         }
        console.log(memoryOperator)
        console.log(memory)
@@ -100,8 +110,7 @@ function setEqualsButton(){
             operator = '';
             }
         }
-       
-        
+          
     console.log(answer);
     })
 }
