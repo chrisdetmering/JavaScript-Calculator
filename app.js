@@ -101,7 +101,7 @@ function setEqualsButton(){
         if (equalsButton) {
             if (!operator) {
             equalsButton.disabled = true;
-            } else { 
+            } else if (firstOperand && secondOperand){ 
                 answer = eval(calculate())
                 calcDisplay.textContent = answer;
                 firstOperand = calcDisplay.textContent;
