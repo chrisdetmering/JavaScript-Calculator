@@ -1,6 +1,6 @@
 # ToDo Application
 
-### This is a simple Calculator application that built using HTML CSS and Vanilla Javavscript
+### This is a simple Calculator application built using HTML CSS and Vanilla Javavscript
  
 #### You can test the app [here](https://beethoven3579.github.io/JavaScript-Calculator/) 
 
