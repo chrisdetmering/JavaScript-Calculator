@@ -1,4 +1,4 @@
-# ToDo Application
+# JavaScript Calculator
 
 ### This is a simple Calculator application built using HTML CSS and Vanilla Javavscript
  
