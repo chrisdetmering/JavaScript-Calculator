@@ -1,6 +1,6 @@
 # JavaScript Calculator
 
-### This is a simple Calculator application built using HTML CSS and Vanilla Javavscript
+### This is a simple Calculator Application built using HTML CSS and Vanilla JavaScript
  
 #### You can test the app [here](https://beethoven3579.github.io/JavaScript-Calculator/) 
 
