@@ -1,10 +1,8 @@
-
 const calcDisplay = document.getElementById('display');
 
 let firstOperand = '';
-let secondOperand ='';
+let secondOperand = '';
 let operator = '';
-
 let memory = '';
 
 function handleDecimal () {
@@ -23,7 +21,7 @@ function setOperands() {
     
     document.querySelectorAll('.numbers')
     .forEach(numberButton =>  {
-        numberButton.addEventListener('click', (e) => {
+        numberButton.addEventListener('click', () => {
             const number = numberButton.id
             if(!operator) {
                 firstOperand += number;
@@ -33,11 +31,7 @@ function setOperands() {
                 secondOperand += number;
                 calcDisplay.textContent = secondOperand;
             }
-            
-            console.log("firstOperand: ", firstOperand)
-            console.log("secondOperand: ", secondOperand)
         })
-
     })
 }
 setOperands()
@@ -49,20 +43,19 @@ function setMathOperators() {
     operatorButton.addEventListener('click', (e) => {
         const selectedOperator = e.target.id;
      
-        if (firstOperand) {
+        if (firstOperand && !operator) {
         operator = selectedOperator;
         }
-        if (operator){
-            if (firstOperand && secondOperand){
-            answer = eval(calculate())
-            calcDisplay.textContent = answer;
-            }     
-        firstOperand = calcDisplay.textContent;
-        secondOperand = '';
-        }
-    
+        else if (secondOperand) {
+            const result = eval(calculate());
+            firstOperand = result;
+            operator = selectedOperator;
+            secondOperand = '';
+            calcDisplay.textContent = firstOperand;   
+            }
+         
         })
-    })
+    }) 
 }
 setMathOperators()
 
@@ -91,12 +84,11 @@ function setMemoryOperators() {
                     calcDisplay.textContent = '0'
                 } else {
                     calcDisplay.textContent = memory;
-                    firstOperand = memory;
+                    firstOperand = calcDisplay.textContent;
+                    operator = '';
                     break;
                 }      
-        }
-       console.log(memoryOperator)
-       console.log(memory)
+            }
         })
     })
 }
@@ -109,16 +101,14 @@ function setEqualsButton(){
         if (equalsButton) {
             if (!operator) {
             equalsButton.disabled = true;
-            }else { 
-            answer = eval(calculate())
-            calcDisplay.textContent = answer;
-            firstOperand = calcDisplay.textContent;
-            secondOperand = '';
-            operator = '';
+            } else { 
+                answer = eval(calculate())
+                calcDisplay.textContent = answer;
+                firstOperand = calcDisplay.textContent;
+                secondOperand = '';
+                operator = '';
             }
         }
-          
-    console.log(answer);
     })
 }
 
