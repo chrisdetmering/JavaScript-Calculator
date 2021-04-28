@@ -5,151 +5,131 @@ let secondOperand = '';
 let operator = '';
 let memory = '';
 
+document.getElementById('decimal').addEventListener('click', handleDecimal);
+
 function handleDecimal () {
-    if (!operator && firstOperand.indexOf('.') === -1) {
+    if (!operator && !haveDecimal(firstOperand)) {
         firstOperand += '.';
         calcDisplay.textContent = firstOperand;
-    } else if (secondOperand.indexOf('.') === -1 && operator){
+        return; 
+    } 
+    
+    if (haveDecimal(secondOperand) && operator){
         secondOperand += '.';
         calcDisplay.textContent = secondOperand;
     }
 }
 
-document.getElementById('.').addEventListener('click', handleDecimal);
-
-function setOperands() {
-    
-    document.querySelectorAll('.numbers')
-    .forEach(numberButton =>  {
-        numberButton.addEventListener('click', () => {
-            const number = numberButton.id
-            if(!operator) {
-                firstOperand += number;
-                calcDisplay.textContent = firstOperand
-            }
-            if (firstOperand && operator) {
-                secondOperand += number;
-                calcDisplay.textContent = secondOperand;
-            }
-        })
-    })
-}
-setOperands()
-
-
-function setMathOperators() {
-    document.querySelectorAll('.operator')
-    .forEach(operatorButton => {
-    operatorButton.addEventListener('click', (e) => {
-        const selectedOperator = e.target.id;
-     
-        if (firstOperand && !operator) {
-        operator = selectedOperator;
+document.querySelectorAll('.numbers')
+.forEach(numberButton =>  {
+    numberButton.addEventListener('click', () => {
+        const number = numberButton.id
+        if(!operator) {
+            firstOperand += number;
+            calcDisplay.textContent = firstOperand;
+            return; 
         }
-        else if (secondOperand) {
-            const result = eval(calculate());
+
+        if (firstOperand && operator) {
+            secondOperand += number;
+            calcDisplay.textContent = secondOperand;
+        }
+    })
+})
+
+document.querySelectorAll('.operator')
+.forEach(operatorButton => {
+operatorButton.addEventListener('click', (e) => {
+        const selectedOperator = e.target.id;
+        
+        if (firstOperand && !operator) {
+            operator = selectedOperator;
+            return; 
+        }
+        if (secondOperand) {
+            const result = calculate();
             firstOperand = result;
             operator = selectedOperator;
             secondOperand = '';
             calcDisplay.textContent = firstOperand;   
-            }
-         
-        })
-    }) 
-}
-setMathOperators()
-
-function setMemoryOperators() {
-    document.querySelectorAll('.memory-operator')
-    .forEach(memoryButton => {
-    memoryButton.addEventListener('click', (e) => {
-        const memoryOperator = e.target.id;
-        operator = memoryOperator;
+        }
         
-        switch(operator) { 
-            case 'add-memory':
-                memory = Number(memory) + Number(calcDisplay.textContent);
-                calcDisplay.textContent = '0';
-                operator = '';
-                firstOperand = '';
-                break;
-            case 'subtract-memory':
-                memory -= calcDisplay.textContent;
-                calcDisplay.textContent = '0';
-                operator = '';
-                firstOperand = '';
-                break;
-            case 'memory-recall':
-                if (!memory) {
-                    calcDisplay.textContent = '0'
-                } else {
-                    calcDisplay.textContent = memory;
-                    firstOperand = calcDisplay.textContent;
-                    operator = '';
-                    break;
-                }      
-            }
-        })
-    })
-}
-setMemoryOperators()
+    });
+}) 
 
-function setEqualsButton(){
-    document.querySelector('.equals') 
-    .addEventListener('click', (e) => {
-        const equalsButton = e.target.id;
-        if (equalsButton) {
-            if (!operator) {
-            equalsButton.disabled = true;
-            } else if (firstOperand && secondOperand){ 
-                answer = eval(calculate())
-                calcDisplay.textContent = answer;
-                firstOperand = calcDisplay.textContent;
-                secondOperand = '';
+document.querySelectorAll('.memory-operator')
+.forEach(memoryButton => {
+memoryButton.addEventListener('click', (e) => {
+    const memoryOperator = e.target.id;
+    
+    switch(memoryOperator) { 
+        case 'add-memory':
+            memory = add(memory, calcDisplay.textContent)
+            break;
+        case 'subtract-memory':
+            memory = subtract(memory, calcDisplay.textContent)
+            break;
+        case 'memory-recall':
+            if (!memory) {
+                calcDisplay.textContent = '0'
+            } else {
+                firstOperand = memory; 
+                secondOperand = ''; 
                 operator = '';
-            }
+                calcDisplay.textContent = firstOperand;
+            } 
+            break;     
         }
     })
-}
+})
 
-setEqualsButton()
+document.querySelector('.equals') 
+.addEventListener('click', (e) => {
+    if (secondOperand){ 
+        const result = calculate();
+        firstOperand = result;
+        operator = '';
+        secondOperand = '';
+        calcDisplay.textContent = firstOperand;   
+    }
+})
 
-function setClearButton() {
-    document.querySelector('.clear')
-    .addEventListener('click', (e) => {
-        const clearButton = e.target.id;
-        if (clearButton) {
-            calcDisplay.textContent = '0';
-            firstOperand = '';
-            secondOperand = '';
-            operator = '';
-        }
-    }) 
-}
-setClearButton()
+document.querySelector('.clear')
+.addEventListener('click', (e) => {
+    calcDisplay.textContent = '0';
+    firstOperand = '';
+    secondOperand = '';
+    operator = '';
+}) 
 
 function calculate() {
     switch (operator) {
         case 'add':
-            return add();
+            return add(firstOperand, secondOperand);
         case 'subtract':
-            return subtract();       
+            return subtract(firstOperand, secondOperand);       
         case 'multiply':
-            return multiply();
+            return multiply(firstOperand, secondOperand);
         case 'divide':Calculator
-            return divide();                    
+            return divide(firstOperand, secondOperand);                    
     }
 }
 
-function add() {
-    return `${Number(firstOperand)} + ${Number(secondOperand)}`;
+function add(numOne, numTwo) {
+    return `${Number(numOne) + Number(numTwo)}`; 
 }
-function subtract() {
-    return `${Number(firstOperand)} - ${Number(secondOperand)}`;
+function subtract(numOne, numTwo) {
+    return `${Number(numOne) - Number(numTwo)}`;
 }
-function multiply() {
-    return `${Number(firstOperand)} * ${Number(secondOperand)}`;
+function multiply(numOne, numTwo) {
+    return `${Number(numOne) * Number(numTwo)}`;
 }
-function divide() {
-    return `${Number(firstOperand)} / ${Number(secondOperand)}`;
+function divide(numOne, numTwo) {
+    return `${Number(numOne) / Number(numTwo)}`;
+}
+
+
+//UTIL 
+function haveDecimal(numberString) {
+    return numberString.indexOf('.') > -1;
 }
